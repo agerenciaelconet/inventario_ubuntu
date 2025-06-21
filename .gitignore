@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+*.env
+
+# Env
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# VSCode settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Mac stuff
+.DS_Store
+
+# Node stuff (por si usás algo con npm)
+node_modules/
+
+# Migrations (opcional si querés controlarlas manualmente)
+# **/migrations/

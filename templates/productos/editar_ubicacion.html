@@ -1,0 +1,30 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Editar Ubicación{% endblock %}
+
+{% block content %}
+<div class="card mt-4">
+  <div class="card-header">
+    <h5 class="mb-0">✏️ Editar Ubicación</h5>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <div class="mb-3">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small">{{ field.errors|striptags }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'lista_ubicaciones' %}" class="btn btn-secondary">Volver</a>
+        <button type="submit" class="btn btn-outline-dark">💾 Actualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

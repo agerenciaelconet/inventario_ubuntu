@@ -1,0 +1,20 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Eliminar Ubicación{% endblock %}
+
+{% block content %}
+<div class="card mt-4 border-danger">
+  <div class="card-header bg-danger text-white">
+    <h5 class="mb-0">🗑️ Eliminar Ubicación</h5>
+  </div>
+  <div class="card-body">
+    <p>¿Estás seguro de que querés eliminar la ubicación <strong>{{ ubicacion.nombre }}</strong>?</p>
+
+    <form method="post" class="d-flex justify-content-between align-items-center mt-4">
+      {% csrf_token %}
+      <a href="{% url 'lista_ubicaciones' %}" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,219 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Lista de Productos{% endblock %}
+
+{% block content %}
+    <h1>📦 Lista de Productos</h1>
+
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">🔎 Filtros de búsqueda</h5>
+    <div>
+      <a href="{% url 'exportar_productos_excel' %}?{{ request.GET.urlencode }}" class="btn btn-success btn-sm me-2">
+        📊 Excel
+      </a>
+      <a href="{% url 'exportar_productos_pdf' %}?{{ request.GET.urlencode }}" class="btn btn-danger btn-sm">
+        📄 PDF
+      </a>
+    </div>
+  </div>
+
+<div class="card-body">
+
+<form method="GET" action="{% url 'lista_productos' %}" class="mb-4" autocomplete="off">
+  <div class="row g-3">
+    <div class="col-md-3">
+      <label for="q" class="form-label">Buscar por código o nombre</label>
+      <input type="text" name="q" id="q" class="form-control" placeholder="Ej: producto123" value="{{ request.GET.q }}" autocomplete="nope">
+    </div>
+
+    <div class="col-md-3">
+      <label for="ubicacion" class="form-label">Ubicación</label>
+      <select name="ubicacion" id="ubicacion" class="form-select" autocomplete="nope">
+        <option value="">Todas las ubicaciones</option>
+        <option value="sin_ubicacion" {% if request.GET.ubicacion == "sin_ubicacion" %}selected{% endif %}>Sin ubicación</option>
+        {% for ubicacion in ubicaciones_disponibles %}
+          <option value="{{ ubicacion.nombre }}" {% if request.GET.ubicacion == ubicacion.nombre %}selected{% endif %}>{{ ubicacion.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <label for="cantidad_filtro" class="form-label">Cantidad</label>
+      <input type="text" name="cantidad_filtro" id="cantidad_filtro" class="form-control" placeholder="Ej: >5, <=10, 3-7, =4" value="{{ request.GET.cantidad_filtro }}" autocomplete="nope">
+    </div>
+
+    <div class="col-md-3">
+      <label for="estado_activo" class="form-label">Estado</label>
+      <select name="estado_activo" id="estado_activo" class="form-select" autocomplete="nope">
+        <option value="">Todos</option>
+        <option value="activos" {% if request.GET.estado_activo == "activos" %}selected{% endif %}>Solo activos</option>
+        <option value="inactivos" {% if request.GET.estado_activo == "inactivos" %}selected{% endif %}>Solo inactivos</option>
+      </select>
+    </div>
+
+    <div class="col-md-3 d-flex align-items-end">
+      <div class="w-100">
+        <label for="alerta" class="form-label">Alerta:</label>
+        <select class="form-select" name="alerta" id="alerta" autocomplete="nope">
+          <option value="">Todos</option>
+          <option value="activa" {% if request.GET.alerta == "activa" %}selected{% endif %}>Solo con alerta activa</option>
+          <option value="sin_alerta" {% if request.GET.alerta == "sin_alerta" %}selected{% endif %}>Solo sin alerta</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-9 d-flex justify-content-end align-items-end gap-2">
+      <button type="submit" class="btn btn-outline-dark px-4">🔍 Buscar</button>
+      <a href="{% url 'lista_productos' %}" class="btn btn-outline-secondary px-4">🧹 Limpiar filtros</a>
+    </div>
+  </div>
+</form>
+
+
+</div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">
+    <h5 class="mb-0">📦 Productos encontrados</h5>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Ubicación</th>
+            <th>Alerta</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for producto in productos %}
+          <tr>
+            <td>{{ producto.codigo }}</td>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.cantidad }}</td>
+            <td>{{ producto.ubicacion|default:"-" }}</td>
+            <td>
+              {% if producto.alerta_activa %}
+                <span class="badge bg-warning text-dark">✔️ Mín: {{ producto.alerta_stock }}</span>
+              {% else %}
+                <span class="badge bg-light text-muted border border-secondary">Sin alerta</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if producto.activo %}
+                <span class="badge bg-success">✅ Activo</span>
+              {% else %}
+                <span class="badge bg-danger">🚫 Inactivo</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'gestionar_producto' producto.id %}" class="btn btn-sm btn-outline-dark">
+                ⚙️ Gestionar
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="text-center text-muted py-4">No se encontraron productos.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="pagination">
+<style>
+  .pagination.custom-white .page-link {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #000000;            /* Texto negro */
+    border: 1px solid #dee2e6;
+  }
+
+  .pagination.custom-white .page-link:hover {
+    background-color: #f2f2f2;
+    color: #000000;
+  }
+
+  .pagination.custom-white .page-item.active .page-link {
+    background-color: #000000; /* Fondo negro para la página activa */
+    border-color: #000000;
+    color: #ffffff;
+  }
+
+  .pagination.custom-white .page-item.disabled .page-link {
+    background-color: #ffffff;
+    color: #6c757d;
+  }
+</style>
+
+{% if productos.has_other_pages %}
+  <nav aria-label="Paginación de productos" class="mt-4">
+    <ul class="pagination custom-white justify-content-center">
+
+      {# Botón Previous #}
+      {% if productos.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ productos.previous_page_number }}">Previous</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+        </li>
+      {% endif %}
+
+      {# Números de página #}
+      {% for num in productos.paginator.page_range %}
+        {% if num == productos.number %}
+          <li class="page-item active">
+            <span class="page-link">{{ num }}</span>
+          </li>
+        {% elif num >= productos.number|add:'-2' and num <= productos.number|add:'2' %}
+          <li class="page-item">
+            <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ num }}">{{ num }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {# Botón Next #}
+      {% if productos.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?{% if request.GET %}{{ request.GET.urlencode|safe }}&{% endif %}page={{ productos.next_page_number }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Next</span>
+        </li>
+      {% endif %}
+
+    </ul>
+  </nav>
+{% endif %}
+
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form[action="{% url 'lista_productos' %}"]');
+
+        form.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Evita que se abra de nuevo el select
+                form.submit(); // Envía el formulario directamente
+            }
+        });
+    });
+</script>
+
+{% endblock %}

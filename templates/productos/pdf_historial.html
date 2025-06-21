@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8pt;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 2px;
+            text-align: left;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <h2>Historial de Movimientos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 12%;">Fecha</th>
+                <th style="width: 18%;">Producto</th>
+                <th style="width: 10%;">Código</th>
+                <th style="width: 10%;">Tipo</th>
+                <th style="width: 10%;">Cantidad</th>
+                <th style="width: 15%;">Usuario</th>
+                <th style="width: 25%;">Comentario</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in movimientos %}
+            <tr>
+                <td>{{ m.fecha|date:"d/m/Y" }}</td>
+                <td>{{ m.producto.nombre }}</td>
+                <td>{{ m.producto.codigo }}</td>
+                <td>{{ m.tipo }}</td>
+                <td>{{ m.cantidad }}</td>
+                <td>{{ m.usuario }}</td>
+                <td><para style="font-size:8pt; wordWrap='CJK';">{{ m.comentario|linebreaksbr }}</para></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

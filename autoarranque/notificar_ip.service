@@ -1,0 +1,19 @@
+[Unit]
+Description=Enviar IP por Telegram al inicio del sistema
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Reemplazar "USUARIO" con el nombre del usuario que ejecutará el servidor
+User=USUARIO
+# Ruta del directorio donde se encuentra el script a ejecutar
+WorkingDirectory=/opt/autoarranque
+# Comando para iniciar el servidor al arrancar el sistema
+ExecStart=/usr/bin/python3 /opt/autoarranque/notificar_ip.py
+Restart=on-failure
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

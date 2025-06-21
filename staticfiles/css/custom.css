@@ -1,0 +1,134 @@
+/* =====================
+   NAVBAR PERSONALIZADO
+   ===================== */
+
+/* Estilo base: letras negras siempre */
+.nav-tabs .nav-link {
+    color: #000 !important;
+    border: none;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    background-color: transparent;
+}
+
+/* Hover sutil con fondo gris claro */
+.nav-tabs .nav-link:hover {
+    background-color: #f1f1f1;
+    border-radius: 0.25rem;
+}
+
+/* Activo: fondo gris más marcado y letra más fuerte */
+.nav-tabs .nav-link.active {
+    background-color: #e0e0e0;
+    font-weight: 600;
+    border-radius: 0.25rem;
+}
+
+/* ============================
+   BOTÓN DE CERRAR SESIÓN
+   ============================ */
+
+.btn-logout {
+    color: #000;
+    border: 1px solid #000;
+    background-color: transparent;
+    padding: 5px 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 0.25rem;
+}
+
+.btn-logout:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ============================
+   ALERTA LIMPIA PERSONALIZADA
+   ============================ */
+
+.alert-clean {
+    background-color: #fff9db;
+    color: #7c5e00;
+    border-left: 4px solid #ffcc00;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    margin-top: 10px;
+}
+
+/* ============================
+   BOTONES GENERALES NEGROS
+   ============================ */
+
+/* Usar como: <button class="btn btn-dark">Texto</button> */
+/* Opcional: para outline */
+.btn-outline-dark {
+    color: #000;
+    border-color: #000;
+}
+.btn-outline-dark:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* =====================
+   CHECKBOX NEGRO PERSONALIZADO (✓)
+   ===================== */
+
+/* Oculta el checkbox por defecto */
+input[type="checkbox"].form-check-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #000;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    vertical-align: middle;
+    position: relative;
+    margin-right: 8px;
+}
+
+/* Checkbox marcado (✓ negro sobre fondo blanco) */
+input[type="checkbox"].form-check-input:checked {
+    background-color: #000;
+    border-color: #000;
+}
+
+/* Palomita (✓) blanca cuando está seleccionado */
+input[type="checkbox"].form-check-input:checked::before {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Estilo al hacer hover */
+input[type="checkbox"].form-check-input:hover {
+    opacity: 0.8;
+}
+
+/* =====================
+   ELIMINAR RESPLANDOR AZUL DE BOOTSTRAP
+   ===================== */
+
+/* Para inputs, textareas y selects */
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    border-color: #000 !important;  /* Borde negro al enfocar */
+    box-shadow: 0 0 0 0.25rem rgba(128, 128, 128, 0.25) !important; /* Sombra gris */
+    outline: 0 !important; /* Opcional: Eliminar outline por defecto del navegador */
+}
+
+/* Para checkboxes (si usaste la solución anterior) */
+input[type="checkbox"].form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(128, 128, 128, 0.25) !important;
+}
+

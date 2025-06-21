@@ -1,0 +1,46 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Agregar Producto{% endblock %}
+
+{% block content %}
+<h1>➕ Agregar Producto</h1>
+<div class="card mt-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">➕ Formulario de ingreso</h5>
+  </div>
+  <div class="card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+{% for field in form %}
+  {% if field.field.widget.input_type == "checkbox" %}
+    <div class="form-check mb-3">
+      <label for="{{ field.id_for_label }}" class="form-check-label">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}
+        <div class="form-text">{{ field.help_text }}</div>
+      {% endif %}
+      {% if field.errors %}
+        <div class="text-danger small">{{ field.errors }}</div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="mb-3">
+      <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}
+        <div class="form-text">{{ field.help_text }}</div>
+      {% endif %}
+      {% if field.errors %}
+        <div class="text-danger small">{{ field.errors }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}
+
+
+      <button type="submit" class="btn btn-outline-dark px-4">💾 Guardar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
