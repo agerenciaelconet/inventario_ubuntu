@@ -7,8 +7,14 @@ NGROK_BIN="/usr/local/bin/ngrok"
 GUNICORN_BIN="$PROYECTO_DIR/env/bin/gunicorn"
 
 # === VARIABLES DEL BOT ===
-BOT_TOKEN="7612438597:AAFWnvkBsJzO-2_wNnhvmSE7zaM8WwO6UbI"
-CHAT_ID=-4886039686
+BOT_TOKEN="tu_token_de_bot"
+# Reemplaza con el token generado por BotFather al crear tu bot de Telegram.
+# El formato es similar a: 123456789:ABCdefGHIjkLmnOPQRstuVWxyZ
+
+CHAT_ID=-123456789
+# Reemplaza con el ID del chat o grupo al que deseas enviar los mensajes.
+# Si es un grupo, asegúrate de que el bot esté dentro del grupo.
+# Los IDs de grupo normalmente empiezan con un signo negativo (-).
 WEBHOOK_ENDPOINT="/productos/webhook/"
 
 # === FUNCIÓN PARA OBTENER IP LOCAL ===
